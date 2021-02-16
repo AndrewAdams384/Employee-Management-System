@@ -1,7 +1,6 @@
 const mysql = require('mysql2');
-const {promptChoices, promptAddDepartment, promptAddEmployee} = require('./lib/prompts')
-const {viewAllDepartments, viewAllEmployees, addDepartment, addEmployee} = require('./lib/queries')
-var employees = [];
+const {promptChoices, promptAddDepartment, promptAddEmployee, promptAddRole} = require('./lib/prompts');
+const {viewAllDepartments, viewAllEmployees, addDepartment, addEmployee, viewAllRoles, addRole} = require('./lib/queries');
 
 var connection = mysql.createConnection({
     host: 'localhost',
@@ -37,6 +36,25 @@ async function runPrompt() {
             await viewAllEmployees(connection);
             await runPrompt();
             break;
+        case 'Add a Role':
+            await viewAllRoles(connection);
+            role = await promptAddRole();
+            addRole(connection, role.title, role.salary, role.department_id);
+            await viewAllRoles(connection);
+            await runPrompt();
+            break;
+        case 'View All Employees':
+            await viewAllEmployees(connection);
+            await runPrompt();
+            break;
+        case 'View All Departments':
+            await viewAllDepartments(connection);
+            await runPrompt();
+            break;
+        case 'View All Roles':
+            await viewAllRoles(connection);
+            await runPrompt();
+            break;        
     }
 }
 
