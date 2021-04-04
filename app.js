@@ -39,7 +39,7 @@ async function runPrompt() {
         case 'Add a Role':
             await viewAllRoles(connection);
             role = await promptAddRole();
-            addRole(connection, role.title, role.salary, role.department_id);
+            addRole(connection, role.title, role.salary);
             await viewAllRoles(connection);
             await runPrompt();
             break;
